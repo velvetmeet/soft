@@ -6,6 +6,8 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f3ede4">
 <title id="docTitle">VelvetMeet &mdash; 18+</title>
+<link rel="dns-prefetch" href="https://go.cm-trk6.com">
+<link rel="preconnect" href="https://go.cm-trk6.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -206,7 +208,7 @@ footer a:hover{border-color:#7a7269}
     <h1 id="h1Text">A community for people 45+</h1>
     <p class="sub" id="subText">Real conversations start here.</p>
 
-    <a href="/go" class="btn" id="ctaBtn">I'm 18+ &mdash; show me &rarr;</a>
+    <a href="/go" class="btn" id="ctaBtn">I'm 18+ — show me →</a>
 
     <p class="micro" id="microText">
       <span>Free to join</span>&middot;<span>Verified</span>&middot;<span>Real people 40+</span>
@@ -287,32 +289,32 @@ var currentVariant = getVariant();
 var I18N = {
   en:{
     htmlLang:"en",
-    title:"VelvetMeet &mdash; 18+",
-    cta:"I'm 18+ &mdash; show me &rarr;",
+    title:"VelvetMeet — 18+",
+    cta:"I'm 18+ — show me →",
     micro:["Free to join","Verified","Real people 40+"],
     cookieMsg:"We use essential cookies only.",
     cookieOk:"Got it",
-    footerCopy:"&copy; 2026 VelvetMeet &middot; 18+ only",
+    footerCopy:"© 2026 VelvetMeet · 18+ only",
     footerPrivacy:"Privacy",footerTerms:"Terms",footerCookies:"Cookies",footerImpressum:"Impressum"
   },
   de:{
     htmlLang:"de",
-    title:"VelvetMeet &mdash; 18+",
-    cta:"Ich bin 18+ &mdash; zeig mir &rarr;",
+    title:"VelvetMeet — 18+",
+    cta:"Ich bin 18+ — zeig mir →",
     micro:["Kostenlos","Verifiziert","Echte Menschen 40+"],
     cookieMsg:"Wir verwenden nur notwendige Cookies.",
     cookieOk:"Verstanden",
-    footerCopy:"&copy; 2026 VelvetMeet &middot; Nur 18+",
+    footerCopy:"© 2026 VelvetMeet · Nur 18+",
     footerPrivacy:"Datenschutz",footerTerms:"AGB",footerCookies:"Cookies",footerImpressum:"Impressum"
   },
   pl:{
     htmlLang:"pl",
-    title:"VelvetMeet &mdash; 18+",
-    cta:"Mam 18+ &mdash; pokaż mi &rarr;",
+    title:"VelvetMeet — 18+",
+    cta:"Mam 18+ — pokaż mi →",
     micro:["Za darmo","Zweryfikowane","Prawdziwi ludzie 40+"],
     cookieMsg:"Używamy tylko niezbędnych cookies.",
     cookieOk:"Rozumiem",
-    footerCopy:"&copy; 2026 VelvetMeet &middot; Tylko 18+",
+    footerCopy:"© 2026 VelvetMeet · Tylko 18+",
     footerPrivacy:"Prywatność",footerTerms:"Regulamin",footerCookies:"Cookies",footerImpressum:"Dane firmy"
   }
 };
@@ -396,6 +398,25 @@ document.getElementById("langSelect").addEventListener("change", function(e){
     bar.style.display = "none";
     try{ localStorage.setItem("vm_cookie_ok", "1"); }catch(e){}
   });
+})();
+
+// Speed up CTA click — warm the connection on pointerdown
+(function(){
+  var btn = document.getElementById("ctaBtn");
+  if(!btn) return;
+  var warmed = false;
+  function warmup(){
+    if(warmed) return;
+    warmed = true;
+    var link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = "https://go.cm-trk6.com";
+    link.crossOrigin = "";
+    document.head.appendChild(link);
+  }
+  btn.addEventListener("pointerdown", warmup, {passive:true,once:true});
+  btn.addEventListener("touchstart", warmup, {passive:true,once:true});
+  btn.addEventListener("mouseenter", warmup, {passive:true,once:true});
 })();
 </script>
 
