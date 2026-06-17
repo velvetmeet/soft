@@ -1,228 +1,233 @@
-// =================================
 // VELVETMEET MIDDLEWARE
 // Geo-IP language detection
 // Optional cloaking (off by default)
 // Bot logging (always on, for analysis)
-// =================================
 
+// CLOAKING toggle
 const CLOAKING_ENABLED = false;
-const BOT_LOGGING_https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+// Bot logging to Cloudflare logs
+const BOT_LOGGING_ENABLED = true;
+
+// User-Agent patterns that trigger bot detection
+// NOTE: "instagram" and "whatsapp" removed to avoid false positives
+// on in-app browsers (real users coming from Instagram/WhatsApp)
+const BOT_PATTERNS = [
+  // Meta crawlers
+  "facebookexternalhit",
+  "facebookcatalog",
+  "meta-externalagent",
+  "meta-externalfetcher",
+  
+  // Other social
+  "twitterbot",
+  "linkedinbot",
+  "pinterestbot",
+  "telegrambot",
+  "discordbot",
+  "slackbot",
+  
+  // Search engines
+  "googlebot",
+  "google-inspectiontool",
+  "bingbot",
+  "yandexbot",
+  "duckduckbot",
+  "baiduspider",
+  "applebot",
+  "amazonbot",
+  
+  // AI crawlers
+  "anthropic-ai",
+  "claudebot",
+  "gptbot",
+  "chatgpt-user",
+  "perplexitybot",
+  "bytedancespider",
+  "ccbot",
+  "diffbot",
+  
+  // SEO/analytics tools
+  "ahrefsbot",
+  "semrushbot",
+  "mj12bot",
+  "dotbot",
+  "screaming frog",
+  "rogerbot",
+  "ia_archiver",
+  
+  // Headless / automation
+  "headless",
+  "phantomjs",
+  "selenium",
+  "puppeteer",
+  "playwright",
+  "chrome-lighthouse",
+  
+  // Generic
+  "bot/",
+  "spider",
+  "crawler",
+  "scraper"
+];
+
+// Meta IP prefixes (2026)
+const META_IP_PREFIXES = [
+  "66.220.144.", "66.220.145.", "66.220.146.", "66.220.147.",
+  "66.220.148.", "66.220.149.", "66.220.150.", "66.220.151.",
+  "66.220.152.", "66.220.153.", "66.220.154.", "66.220.155.",
+  "66.220.156.", "66.220.157.", "66.220.158.", "66.220.159.",
+  "69.171.224.", "69.171.225.", "69.171.226.", "69.171.227.",
+  "69.171.228.", "69.171.229.", "69.171.230.", "69.171.231.",
+  "69.171.232.", "69.171.233.", "69.171.234.", "69.171.235.",
+  "69.171.236.", "69.171.237.", "69.171.238.", "69.171.239.",
+  "69.171.240.", "69.171.241.", "69.171.242.", "69.171.243.",
+  "69.171.244.", "69.171.245.", "69.171.246.", "69.171.247.",
+  "69.171.248.", "69.171.249.", "69.171.250.", "69.171.251.",
+  "69.171.252.", "69.171.253.", "69.171.254.", "69.171.255.",
+  "157.240.", "173.252.", "204.15.20.",
+  "31.13.", "129.134.", "185.60."
+];
+
+// CLOAKED PAGE — shown to bots when cloaking is enabled
+const CLOAKED_HTML = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mindful Mornings &mdash; Slow Living Journal</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-html,body{height:100%;width:100%;overflow-x:hidden}
-body{
-  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:#f3ede4;
-  color:#1e1a16;
-  line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-  display:flex;
-  flex-direction:column;
-  min-height:100vh;
-  min-height:100dvh;
-}
-.bg{position:fixed;inset:0;background:linear-gradient(180deg,rgba(243,237,228,.35) 0%,rgba(243,237,228,.65) 100%),url("images/bg.jpg") center/cover no-repeat;z-index:0}
-main{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;padding:24px 18px}
-.card{background:#fffaf3;border-radius:24px;padding:36px 30px 30px;width:100%;max-width:440px;box-shadow:0 14px 50px rgba(40,30,20,.16),0 2px 8px rgba(40,30,20,.06);text-align:center;animation:appear .6s ease}
-@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.eyebrow{display:inline-block;font-size:11px;letter-spacing:.18em;font-weight:600;color:#b8742a;border:1px solid #e6dccb;border-radius:100px;padding:5px 12px;margin-bottom:20px;text-transform:uppercase}
-h1{font-family:"Lora",serif;font-size:26px;line-height:1.3;font-weight:600;letter-spacing:-.01em;color:#1e1a16;margin-bottom:14px}
-.sub{font-size:15px;color:#5c544a;margin-bottom:28px}
-.btn{display:block;width:100%;background:#b8742a;color:#fff;font-family:"Inter",sans-serif;font-size:16px;font-weight:600;letter-spacing:.01em;padding:17px 22px;border:none;border-radius:14px;cursor:pointer;transition:background .15s,transform .15s;text-decoration:none;text-align:center}
-.btn:hover{background:#a0631f}
-.btn:active{transform:scale(.98)}
-.micro{font-size:12.5px;color:#7a7269;margin-top:14px;margin-bottom:24px}
-.micro span{margin:0 4px}
-footer{position:relative;z-index:1;padding:18px 18px calc(18px + env(safe-area-inset-bottom));text-align:center;font-size:12px;color:#7a7269}
-footer a{color:#7a7269;text-decoration:none;margin:0 8px;border-bottom:1px solid transparent}
-footer a:hover{border-color:#7a7269}
-.footer-copy{display:block;margin-bottom:6px}
-.lang{position:absolute;top:18px;right:18px;z-index:2}
-.lang select{appearance:none;-webkit-appearance:none;background:rgba(255,250,243,.85);border:1px solid #e6dccb;border-radius:10px;padding:6px 28px 6px 12px;font:inherit;font-size:13px;color:#1e1a16;cursor:pointer;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%237a7269' d='M0 0l5 6 5-6z'/></svg>");background-repeat:no-repeat;background-position:right 8px center}
-.cookie{position:fixed;bottom:14px;left:14px;right:14px;background:#1e1a16;color:#f3ede4;border-radius:14px;padding:14px 16px;z-index:5;font-size:13px;display:none;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 6px 24px rgba(0,0,0,.2)}
-.cookie button{background:#b8742a;border:none;color:#fff;font:inherit;font-size:13px;font-weight:600;padding:9px 16px;border-radius:10px;cursor:pointer;flex-shrink:0}
-@media(min-width:520px){.card{padding:44px 40px 36px}h1{font-size:30px}}
-@media(max-width:380px){h1{font-size:23px}.sub{font-size:14px}}
-@media(max-width:520px){.lang{top:14px;right:14px}.lang select{padding:4px 22px 4px 8px;font-size:11px}}
+body{font-family:Georgia,serif;background:#f3ede4;color:#1e1a16;max-width:680px;margin:0 auto;padding:40px 24px;line-height:1.7}
+h1{font-size:28px;font-weight:600;margin-bottom:8px}
+h2{font-size:20px;margin-top:32px;font-weight:600}
+p{font-size:16px;margin-bottom:16px;color:#3c3530}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#b8742a;margin-bottom:24px}
+.footer{margin-top:48px;padding-top:24px;border-top:1px solid #e6dccb;color:#7a7269;font-size:13px}
 </style>
 </head>
 <body>
+<div class="eyebrow">A slow living journal</div>
+<h1>Mindful Mornings</h1>
+<p>A weekly note about rituals, rain, books, and quiet rooms &mdash; for people who want a slower life after fifty.</p>
 
-<div class="bg" aria-hidden="true"></div>
+<h2>This week's letter</h2>
+<p>October arrived softly this year. The kind of morning where you stand by the window with both hands around a cup, and watch the leaves do their slow falling.</p>
+<p>We talk a lot about productivity. We talk less about <em>permission</em> &mdash; permission to slow down, to read for an hour, to call an old friend without a reason.</p>
+<p>This is a place for that.</p>
 
-<div class="lang">
-  <select id="langSelect" aria-label="Language">
-    <option value="en">EN</option>
-    <option value="de">DE</option>
-    <option value="pl">PL</option>
-  </select>
-</div>
+<h2>About</h2>
+<p>Mindful Mornings is a small publication based in Europe. We write about books, slow rituals, and the soft work of starting again at any age.</p>
 
-<main>
-  <div class="card">
-    <span class="eyebrow">18+</span>
-    <h1 id="h1Text">A community for people 45+</h1>
-    <p class="sub" id="subText">Real conversations start here.</p>
-
-    <a href="/go?s=organic&amp;v=0" class="btn" id="ctaBtn">I'm 18+ — show me →</a>
-
-    <p class="micro" id="microText">
-      <span>Free to join</span>·<span>Verified members</span>·<span>Community 40+</span>
-    </p>
-  </div>
-</main>
-
-<footer>
-  <span class="footer-copy" id="footerCopy">© 2026 VelvetMeet · 18+ only</span>
-  <a href="/privacy.html" id="footerPrivacy">Privacy</a>·<a href="/terms.html" id="footerTerms">Terms</a>·<a href="/cookies.html" id="footerCookies">Cookies</a>·<a href="/impressum.html" id="footerImpressum">Impressum</a>
-</footer>
-
-<div class="cookie" id="cookieBar" role="status">
-  <span id="cookieMsg">We use essential cookies only.</span>
-  <button id="cookieOk">Got it</button>
-</div>
-
-<script>
-// ===== A/B variants: pairs of H1 + Sub =====
-var VARIANTS = {
-  en:{
-    pairs:
-      {h1:"She didn't expect to start over at 52.", sub:"Some women here started exactly where you are now."},
-      {h1:"Is it really too late to meet someone real?", sub:"Most of the people here thought the same — until they didn't."},
-      {h1:"She wasn't sure if it was still possible.", sub:"Then someone wrote back. So can you."}
-    ]
-  },
-  de:{
-    pairs:
-      {h1:"Mit 52 hätte sie nicht gedacht, nochmal anzufangen.", sub:"Manche hier haben genau dort angefangen, wo du jetzt bist."},
-      {h1:"Ist es wirklich zu spät, jemanden Echten zu treffen?", sub:"Die meisten hier dachten dasselbe — bis es passierte."},
-      {h1:"Sie war sich nicht sicher, ob es noch möglich war.", sub:"Dann hat jemand zurückgeschrieben. Du kannst das auch."}
-    ]
-  },
-  pl:{
-    pairs:
-      {h1:"W wieku 52 lat nie spodziewała się zaczynać od nowa.", sub:"Niektóre osoby tutaj zaczynały dokładnie tam, gdzie ty teraz."},
-      {h1:"Czy naprawdę za późno, by poznać kogoś prawdziwego?", sub:"Większość ludzi tutaj myślała tak samo — aż się to zmieniło."},
-      {h1:"Nie była pewna, czy to jeszcze możliwe.", sub:"Potem ktoś odpisał. Ty też możesz."}
-    ]
-  }
-};
-
-var I18N = {
-  en:{
-    htmlLang:"en", title:"VelvetMeet — 18+",
-    cta:"I'm 18+ — show me →",
-    micro:["Free to join","Verified members","Community 40+"],
-    cookieMsg:"We use essential cookies only.", cookieOk:"Got it",
-    footerCopy:"© 2026 VelvetMeet · 18+ only",
-    footerPrivacy:"Privacy", footerTerms:"Terms", footerCookies:"Cookies", footerImpressum:"Impressum"
-  },
-  de:{
-    htmlLang:"de", title:"VelvetMeet — 18+",
-    cta:"Ich bin 18+ — zeig mir →",
-    micro:["Kostenlos","Verifizierte Mitglieder","Community 40+"],
-    cookieMsg:"Wir verwenden nur notwendige Cookies.", cookieOk:"Verstanden",
-    footerCopy:"© 2026 VelvetMeet · Nur 18+",
-    footerPrivacy:"Datenschutz", footerTerms:"AGB", footerCookies:"Cookies", footerImpressum:"Impressum"
-  },
-  pl:{
-    htmlLang:"pl", title:"VelvetMeet — 18+",
-    cta:"Mam 18+ — pokaż mi →",
-    micro:["Za darmo","Zweryfikowani członkowie","Społeczność 40+"],
-    cookieMsg:"Używamy tylko niezbędnych cookies.", cookieOk:"Rozumiem",
-    footerCopy:"© 2026 VelvetMeet · Tylko 18+",
-    footerPrivacy:"Prywatność", footerTerms:"Regulamin", footerCookies:"Cookies", footerImpressum:"Dane firmy"
-  }
-};
-
-var COUNTRY_LANG = {DE:"de",AT:"de",CH:"de",LI:"de",LU:"de",PL:"pl"};
-
-// ===== Sticky variant (one user = one variant) =====
-function getVariant(){
-  try{
-    var stored = localStorage.getItem("vm_variant");
-    if(stored && /^[0-2]$/.test(stored)) return parseInt(stored,10);
-  }catch(e){}
-  var v = Math.floor(Math.random()*3);
-  try{ localStorage.setItem("vm_variant", String(v)); }catch(e){}
-  return v;
-}
-var currentVariant = getVariant();
-
-function detectLang(){
-  var qs = new URLSearchParams(location.search);
-  var qlang = qs.get("lang");
-  if(qlang && I18N[qlang]) return qlang;
-  try{
-    var stored = localStorage.getItem("vm_lang");
-    if(stored && I18N[stored]) return stored;
-  }catch(e){}
-  if(window.__VM_COUNTRY){
-    var c = window.__VM_COUNTRY.toUpperCase();
-    if(COUNTRY_LANG[c]) return COUNTRY_LANG[c];
-  }
-  var nav = (navigator.language || "en").toLowerCase().slice(0,2);
-  if(I18N[nav]) return nav;
-  return "en";
-}
-
-function buildCtaHref(){
-  var s = new URLSearchParams(location.search).get("s") || "organic";
-  s = s.replace(//g, "").slice(0,40);
-  if(!s) s = "organic";
-  return "/go?s=" + encodeURIComponent(s) + "&v=" + currentVariant;
-}
-
-function applyLang(lang){
-  var t = I18N[lang] || I18N.en;
-  var v = VARIANTS[lang] || VARIANTS.en;
-  var pair = v.pairs[currentVariant] || v.pairs[0];
-
-  document.getElementById("htmlRoot").lang = t.htmlLang;
-  document.getElementById("docTitle").textContent = t.title;
-  document.getElementById("h1Text").textContent = pair.h1;
-  document.getElementById("subText").textContent = pair.sub;
-  document.getElementById("ctaBtn").textContent = t.cta;
-  document.getElementById("ctaBtn").href = buildCtaHref();
-  document.getElementById("microText").innerHTML =
-    "<span>"+t.micro[0]+"</span>·<span>"+t.micro[1]+"</span>·<span>"+t.micro[2]+"</span>";
-  document.getElementById("cookieMsg").textContent = t.cookieMsg;
-  document.getElementById("cookieOk").textContent = t.cookieOk;
-  document.getElementById("footerCopy").textContent = t.footerCopy;
-  document.getElementById("footerPrivacy").textContent = t.footerPrivacy;
-  document.getElementById("footerTerms").textContent = t.footerTerms;
-  document.getElementById("footerCookies").textContent = t.footerCookies;
-  document.getElementById("footerImpressum").textContent = t.footerImpressum;
-  document.getElementById("langSelect").value = lang;
-
-  try{ localStorage.setItem("vm_lang", lang); }catch(e){}
-}
-
-var currentLang = detectLang();
-applyLang(currentLang);
-
-document.getElementById("langSelect").addEventListener("change", function(e){
-  applyLang(e.target.value);
-});
-
-// Cookie banner
-(function(){
-  var bar = document.getElementById("cookieBar");
-  try{
-    if(!localStorage.getItem("vm_cookie_ok")){
-      setTimeout(function(){ bar.style.display = "flex"; }, 4000);
-    }
-  }catch(e){
-    setTimeout(function(){ bar.style.display = "flex"; }, 4000);
-  }
-  document.getElementById("cookieOk").addEventListener("click", function(){
-    bar.style.display = "none";
-    try{ localStorage.setItem("vm_cookie_ok", "1"); }catch(e){}
-  });
-})();
-</script>
-
+<div class="footer">&copy; 2026 Mindful Mornings &middot; A reading and rituals journal</div>
 </body>
-</html>
+</html>`;
+
+// HELPERS
+
+function isBotByUA(userAgent) {
+  if (!userAgent) return false;
+  const ua = userAgent.toLowerCase();
+  return BOT_PATTERNS.some(pattern => ua.includes(pattern));
+}
+
+function isMetaIP(ip) {
+  if (!ip) return false;
+  return META_IP_PREFIXES.some(prefix => ip.startsWith(prefix));
+}
+
+function logBot(request, reason) {
+  if (!BOT_LOGGING_ENABLED) return;
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
+  const ua = request.headers.get("user-agent") || "none";
+  const country = request.headers.get("cf-ipcountry") || "??";
+  console.log(JSON.stringify({
+    type: "bot_detected",
+    reason: reason,
+    ip: ip,
+    ua: ua,
+    country: country,
+    url: request.url,
+    time: new Date().toISOString()
+  }));
+}
+
+function logHuman(request) {
+  if (!BOT_LOGGING_ENABLED) return;
+  // Sample 5% of human traffic for baseline
+  if (Math.random() > 0.05) return;
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
+  const ua = request.headers.get("user-agent") || "none";
+  const country = request.headers.get("cf-ipcountry") || "??";
+  console.log(JSON.stringify({
+    type: "human_sample",
+    ip: ip,
+    ua: ua,
+    country: country,
+    url: request.url,
+    time: new Date().toISOString()
+  }));
+}
+
+// MAIN
+
+export async function onRequest(context) {
+  const request = context.request;
+  const url = new URL(request.url);
+  
+  // === SKIP MIDDLEWARE FOR /go ===
+  // Let /go redirect cleanly without any processing
+  if (url.pathname === "/go") {
+    return context.next();
+  }
+  
+  const userAgent = request.headers.get("user-agent") || "";
+  const ip = request.headers.get("cf-connecting-ip") || "";
+  
+  // Bot detection
+  const botByUA = isBotByUA(userAgent);
+  const botByIP = isMetaIP(ip);
+  const isBot = botByUA || botByIP;
+  
+  // Logging
+  if (isBot) {
+    logBot(request, botByUA ? "user_agent" : "meta_ip");
+  } else {
+    logHuman(request);
+  }
+  
+  // CLOAKING — return decoy page to bots
+  if (CLOAKING_ENABLED && isBot) {
+    return new Response(CLOAKED_HTML, {
+      status: 200,
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "no-store",
+        "x-robots-tag": "noindex,nofollow"
+      }
+    });
+  }
+  
+  // NORMAL FLOW — pass through and inject country
+  const response = await context.next();
+  
+  // If response is a redirect (3xx), return as-is — never patch redirects
+  if (response.status >= 300 && response.status < 400) {
+    return response;
+  }
+  
+  const ct = response.headers.get("content-type") || "";
+  if (!ct.includes("text/html")) return response;
+  
+  const country = request.headers.get("cf-ipcountry") || "";
+  const html = await response.text();
+  const patched = html.replace(
+    "</head>",
+    `<script>window.__VM_COUNTRY=${JSON.stringify(country)};</script></head>`
+  );
+  
+  return new Response(patched, {
+    status: response.status,
+    headers: response.headers,
+  });
+}

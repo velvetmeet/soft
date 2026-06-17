@@ -1,7 +1,5 @@
-// =====================================
 // VELVETMEET /go REDIRECT
 // 302 redirect with dynamic ?s= tracking + variant A/B
-// =====================================
 
 const AFFILIATE_BASE = "https://go.cm-trk6.com/aff_f?h=rA47F6";
 const DEFAULT_SOURCE = "organic";
@@ -17,6 +15,17 @@ export async function onRequest(context) {
   let v = url.searchParams.get("v") || "0";
   v = v.replace(/[^0-9]/g, "").slice(0, 1);
   if (!v || v < "0" || v > "2") v = "0";
+  
+  // Click logging for analytics
+  console.log(JSON.stringify({
+    type: "click",
+    source: s,
+    variant: v,
+    country: context.request.headers.get("cf-ipcountry") || "??",
+    ua: (context.request.headers.get("user-agent") || "").slice(0, 80),
+    referer: context.request.headers.get("referer") || "",
+    time: new Date().toISOString()
+  }));
   
   const target = AFFILIATE_BASE
     + "&aff_sub5=" + encodeURIComponent(s)

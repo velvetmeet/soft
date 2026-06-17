@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f3ede4">
-<title id="docTitle">VelvetMeet — 18+itle>
+<title id="docTitle">VelvetMeet &mdash; 18+</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{height:100%;width:100%;overflow-x:hidden}
@@ -23,29 +23,169 @@ body{
   min-height:100vh;
   min-height:100dvh;
 }
-.bg{position:fixed;inset:0;background:linear-gradient(180deg,rgba(243,237,228,.35) 0%,rgba(243,237,228,.65) 100%),url("images/bg.jpg") center/cover no-repeat;z-index:0}
-main{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;padding:24px 18px}
-.card{background:#fffaf3;border-radius:24px;padding:36px 30px 30px;width:100%;max-width:440px;box-shadow:0 14px 50px rgba(40,30,20,.16),0 2px 8px rgba(40,30,20,.06);text-align:center;animation:appear .6s ease}
-@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.eyebrow{display:inline-block;font-size:11px;letter-spacing:.18em;font-weight:600;color:#b8742a;border:1px solid #e6dccb;border-radius:100px;padding:5px 12px;margin-bottom:20px;text-transform:uppercase}
-h1{font-family:"Lora",serif;font-size:26px;line-height:1.3;font-weight:600;letter-spacing:-.01em;color:#1e1a16;margin-bottom:14px}
-.sub{font-size:15px;color:#5c544a;margin-bottom:28px}
-.btn{display:block;width:100%;background:#b8742a;color:#fff;font-family:"Inter",sans-serif;font-size:16px;font-weight:600;letter-spacing:.01em;padding:17px 22px;border:none;border-radius:14px;cursor:pointer;transition:background .15s,transform .15s;text-decoration:none;text-align:center}
+
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(243,237,228,.35) 0%, rgba(243,237,228,.65) 100%),
+    url("images/bg.jpg") center/cover no-repeat;
+  z-index:0;
+}
+
+main{
+  position:relative;
+  z-index:1;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 18px;
+}
+
+.card{
+  background:#fffaf3;
+  border-radius:24px;
+  padding:36px 30px 30px;
+  width:100%;
+  max-width:440px;
+  box-shadow:0 14px 50px rgba(40,30,20,.16), 0 2px 8px rgba(40,30,20,.06);
+  text-align:center;
+  animation:appear .6s ease;
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.eyebrow{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:.18em;
+  font-weight:600;
+  color:#b8742a;
+  border:1px solid #e6dccb;
+  border-radius:100px;
+  padding:5px 12px;
+  margin-bottom:20px;
+  text-transform:uppercase;
+}
+
+h1{
+  font-family:"Lora",serif;
+  font-size:26px;
+  line-height:1.3;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:#1e1a16;
+  margin-bottom:14px;
+}
+
+.sub{
+  font-size:15px;
+  color:#5c544a;
+  margin-bottom:28px;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  background:#b8742a;
+  color:#fff;
+  font-family:"Inter",sans-serif;
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:.01em;
+  padding:17px 22px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  transition:background .15s,transform .15s;
+  text-decoration:none;
+  text-align:center;
+}
 .btn:hover{background:#a0631f}
 .btn:active{transform:scale(.98)}
-.micro{font-size:12.5px;color:#7a7269;margin-top:14px;margin-bottom:24px}
+
+.micro{
+  font-size:12.5px;
+  color:#7a7269;
+  margin-top:14px;
+  margin-bottom:24px;
+}
 .micro span{margin:0 4px}
-footer{position:relative;z-index:1;padding:18px 18px calc(18px + env(safe-area-inset-bottom));text-align:center;font-size:12px;color:#7a7269}
+
+footer{
+  position:relative;
+  z-index:1;
+  padding:18px 18px calc(18px + env(safe-area-inset-bottom));
+  text-align:center;
+  font-size:12px;
+  color:#7a7269;
+}
 footer a{color:#7a7269;text-decoration:none;margin:0 8px;border-bottom:1px solid transparent}
 footer a:hover{border-color:#7a7269}
 .footer-copy{display:block;margin-bottom:6px}
-.lang{position:absolute;top:18px;right:18px;z-index:2}
-.lang select{appearance:none;-webkit-appearance:none;background:rgba(255,250,243,.85);border:1px solid #e6dccb;border-radius:10px;padding:6px 28px 6px 12px;font:inherit;font-size:13px;color:#1e1a16;cursor:pointer;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%237a7269' d='M0 0l5 6 5-6z'/></svg>");background-repeat:no-repeat;background-position:right 8px center}
-.cookie{position:fixed;bottom:14px;left:14px;right:14px;background:#1e1a16;color:#f3ede4;border-radius:14px;padding:14px 16px;z-index:5;font-size:13px;display:none;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 6px 24px rgba(0,0,0,.2)}
-.cookie button{background:#b8742a;border:none;color:#fff;font:inherit;font-size:13px;font-weight:600;padding:9px 16px;border-radius:10px;cursor:pointer;flex-shrink:0}
-@media(min-width:520px){.card{padding:44px 40px 36px}h1{font-size:30px}}
-@media(max-width:380px){h1{font-size:23px}.sub{font-size:14px}}
-@media(max-width:520px){.lang{top:14px;right:14px}.lang select{padding:4px 22px 4px 8px;font-size:11px}}
+
+.lang{
+  position:absolute;
+  top:18px;
+  right:18px;
+  z-index:2;
+}
+.lang select{
+  appearance:none;-webkit-appearance:none;
+  background:rgba(255,250,243,.85);
+  border:1px solid #e6dccb;
+  border-radius:10px;
+  padding:6px 28px 6px 12px;
+  font:inherit;
+  font-size:13px;
+  color:#1e1a16;
+  cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%237a7269' d='M0 0l5 6 5-6z'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+}
+
+.cookie{
+  position:fixed;
+  bottom:14px;left:14px;right:14px;
+  background:#1e1a16;
+  color:#f3ede4;
+  border-radius:14px;
+  padding:14px 16px;
+  z-index:5;
+  font-size:13px;
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  box-shadow:0 6px 24px rgba(0,0,0,.2);
+}
+.cookie button{
+  background:#b8742a;
+  border:none;
+  color:#fff;
+  font:inherit;font-size:13px;font-weight:600;
+  padding:9px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
+@media(min-width:520px){
+  .card{padding:44px 40px 36px}
+  h1{font-size:30px}
+}
+@media(max-width:380px){
+  h1{font-size:23px}
+  .sub{font-size:14px}
+}
+@media(max-width:520px){
+  .lang{top:14px;right:14px}
+  .lang select{padding:4px 22px 4px 8px;font-size:11px}
+}
 </style>
 </head>
 <body>
@@ -66,17 +206,17 @@ footer a:hover{border-color:#7a7269}
     <h1 id="h1Text">A community for people 45+</h1>
     <p class="sub" id="subText">Real conversations start here.</p>
 
-    <a href="/go?s=organic&amp;v=0" class="btn" id="ctaBtn">I'm 18+ — show me →</a>
+    <a href="/go" class="btn" id="ctaBtn">I'm 18+ &mdash; show me &rarr;</a>
 
     <p class="micro" id="microText">
-      <span>Free to join</span>·<span>Verified members</span>·<span>Community 40+</span>
+      <span>Free to join</span>&middot;<span>Verified</span>&middot;<span>Real people 40+</span>
     </p>
   </div>
 </main>
 
 <footer>
-  <span class="footer-copy" id="footerCopy">© 2026 VelvetMeet · 18+ only</span>
-  <a href="/privacy.html" id="footerPrivacy">Privacy</a>·<a href="/terms.html" id="footerTerms">Terms</a>·<a href="/cookies.html" id="footerCookies">Cookies</a>·<a href="/impressum.html" id="footerImpressum">Impressum</a>
+  <span class="footer-copy" id="footerCopy">&copy; 2026 VelvetMeet &middot; 18+ only</span>
+  <a href="/privacy.html" id="footerPrivacy">Privacy</a>&middot;<a href="/terms.html" id="footerTerms">Terms</a>&middot;<a href="/cookies.html" id="footerCookies">Cookies</a>&middot;<a href="/impressum.html" id="footerImpressum">Impressum</a>
 </footer>
 
 <div class="cookie" id="cookieBar" role="status">
@@ -85,109 +225,138 @@ footer a:hover{border-color:#7a7269}
 </div>
 
 <script>
-// ===== A/B variants: pairs of H1 + Sub =====
+// ========== VARIANT ROTATION ==========
+// 3 headline variants per language, random on each page load
+// Variant number passed to affiliate link as aff_sub4 for tracking
+
 var VARIANTS = {
   en:{
-    pairs:
-      {h1:"She didn't expect to start over at 52.", sub:"Some women here started exactly where you are now."},
-      {h1:"Is it really too late to meet someone real?", sub:"Most of the people here thought the same — until they didn't."},
-      {h1:"She wasn't sure if it was still possible.", sub:"Then someone wrote back. So can you."}
+    h1:[
+      "She didn't expect to start over at 52.",
+      "Is it really too late to meet someone real?",
+      "Her last message was three years ago."
+    ],
+    sub:[
+      "Some women here started exactly where you are now.",
+      "Most of the women here thought the same — until they didn't.",
+      "She finally answered. So can you."
     ]
   },
   de:{
-    pairs:
-      {h1:"Mit 52 hätte sie nicht gedacht, nochmal anzufangen.", sub:"Manche hier haben genau dort angefangen, wo du jetzt bist."},
-      {h1:"Ist es wirklich zu spät, jemanden Echten zu treffen?", sub:"Die meisten hier dachten dasselbe — bis es passierte."},
-      {h1:"Sie war sich nicht sicher, ob es noch möglich war.", sub:"Dann hat jemand zurückgeschrieben. Du kannst das auch."}
+    h1:[
+      "Mit 52 hätte sie nicht gedacht, nochmal anzufangen.",
+      "Ist es wirklich zu spät, jemanden Echten zu treffen?",
+      "Ihre letzte Nachricht war vor drei Jahren."
+    ],
+    sub:[
+      "Einige Frauen hier haben genau dort angefangen, wo Sie jetzt sind.",
+      "Die meisten Frauen hier dachten dasselbe — bis sie es nicht mehr taten.",
+      "Sie hat endlich geantwortet. Sie auch."
     ]
   },
   pl:{
-    pairs:
-      {h1:"W wieku 52 lat nie spodziewała się zaczynać od nowa.", sub:"Niektóre osoby tutaj zaczynały dokładnie tam, gdzie ty teraz."},
-      {h1:"Czy naprawdę za późno, by poznać kogoś prawdziwego?", sub:"Większość ludzi tutaj myślała tak samo — aż się to zmieniło."},
-      {h1:"Nie była pewna, czy to jeszcze możliwe.", sub:"Potem ktoś odpisał. Ty też możesz."}
+    h1:[
+      "W wieku 52 lat nie spodziewała się, że zacznie od nowa.",
+      "Czy naprawdę jest za późno, by poznać kogoś prawdziwego?",
+      "Jej ostatnia wiadomość była trzy lata temu."
+    ],
+    sub:[
+      "Niektóre kobiety tu zaczęły dokładnie tam, gdzie jesteś teraz.",
+      "Większość kobiet tu myślała tak samo — dopóki nie przestały.",
+      "W końcu odpowiedziała. Ty też możesz."
     ]
   }
 };
 
-var I18N = {
-  en:{
-    htmlLang:"en", title:"VelvetMeet — 18+",
-    cta:"I'm 18+ — show me →",
-    micro:["Free to join","Verified members","Community 40+"],
-    cookieMsg:"We use essential cookies only.", cookieOk:"Got it",
-    footerCopy:"© 2026 VelvetMeet · 18+ only",
-    footerPrivacy:"Privacy", footerTerms:"Terms", footerCookies:"Cookies", footerImpressum:"Impressum"
-  },
-  de:{
-    htmlLang:"de", title:"VelvetMeet — 18+",
-    cta:"Ich bin 18+ — zeig mir →",
-    micro:["Kostenlos","Verifizierte Mitglieder","Community 40+"],
-    cookieMsg:"Wir verwenden nur notwendige Cookies.", cookieOk:"Verstanden",
-    footerCopy:"© 2026 VelvetMeet · Nur 18+",
-    footerPrivacy:"Datenschutz", footerTerms:"AGB", footerCookies:"Cookies", footerImpressum:"Impressum"
-  },
-  pl:{
-    htmlLang:"pl", title:"VelvetMeet — 18+",
-    cta:"Mam 18+ — pokaż mi →",
-    micro:["Za darmo","Zweryfikowani członkowie","Społeczność 40+"],
-    cookieMsg:"Używamy tylko niezbędnych cookies.", cookieOk:"Rozumiem",
-    footerCopy:"© 2026 VelvetMeet · Tylko 18+",
-    footerPrivacy:"Prywatność", footerTerms:"Regulamin", footerCookies:"Cookies", footerImpressum:"Dane firmy"
-  }
-};
-
-var COUNTRY_LANG = {DE:"de",AT:"de",CH:"de",LI:"de",LU:"de",PL:"pl"};
-
-// ===== Sticky variant (one user = one variant) =====
+// Pick variant with localStorage stickiness
 function getVariant(){
   try{
     var stored = localStorage.getItem("vm_variant");
-    if(stored && /^[0-2]$/.test(stored)) return parseInt(stored,10);
+    if(stored !== null && ["0","1","2"].includes(stored)){
+      return parseInt(stored, 10);
+    }
   }catch(e){}
-  var v = Math.floor(Math.random()*3);
+  
+  var v = Math.floor(Math.random() * 3);
   try{ localStorage.setItem("vm_variant", String(v)); }catch(e){}
   return v;
 }
+
 var currentVariant = getVariant();
+
+var I18N = {
+  en:{
+    htmlLang:"en",
+    title:"VelvetMeet &mdash; 18+",
+    cta:"I'm 18+ &mdash; show me &rarr;",
+    micro:["Free to join","Verified","Real people 40+"],
+    cookieMsg:"We use essential cookies only.",
+    cookieOk:"Got it",
+    footerCopy:"&copy; 2026 VelvetMeet &middot; 18+ only",
+    footerPrivacy:"Privacy",footerTerms:"Terms",footerCookies:"Cookies",footerImpressum:"Impressum"
+  },
+  de:{
+    htmlLang:"de",
+    title:"VelvetMeet &mdash; 18+",
+    cta:"Ich bin 18+ &mdash; zeig mir &rarr;",
+    micro:["Kostenlos","Verifiziert","Echte Menschen 40+"],
+    cookieMsg:"Wir verwenden nur notwendige Cookies.",
+    cookieOk:"Verstanden",
+    footerCopy:"&copy; 2026 VelvetMeet &middot; Nur 18+",
+    footerPrivacy:"Datenschutz",footerTerms:"AGB",footerCookies:"Cookies",footerImpressum:"Impressum"
+  },
+  pl:{
+    htmlLang:"pl",
+    title:"VelvetMeet &mdash; 18+",
+    cta:"Mam 18+ &mdash; pokaż mi &rarr;",
+    micro:["Za darmo","Zweryfikowane","Prawdziwi ludzie 40+"],
+    cookieMsg:"Używamy tylko niezbędnych cookies.",
+    cookieOk:"Rozumiem",
+    footerCopy:"&copy; 2026 VelvetMeet &middot; Tylko 18+",
+    footerPrivacy:"Prywatność",footerTerms:"Regulamin",footerCookies:"Cookies",footerImpressum:"Dane firmy"
+  }
+};
+
+var COUNTRY_LANG = {
+  DE:"de",AT:"de",CH:"de",LI:"de",LU:"de",
+  PL:"pl"
+};
 
 function detectLang(){
   var qs = new URLSearchParams(location.search);
   var qlang = qs.get("lang");
   if(qlang && I18N[qlang]) return qlang;
+
   try{
     var stored = localStorage.getItem("vm_lang");
     if(stored && I18N[stored]) return stored;
   }catch(e){}
+
   if(window.__VM_COUNTRY){
     var c = window.__VM_COUNTRY.toUpperCase();
     if(COUNTRY_LANG[c]) return COUNTRY_LANG[c];
   }
+
   var nav = (navigator.language || "en").toLowerCase().slice(0,2);
   if(I18N[nav]) return nav;
-  return "en";
-}
 
-function buildCtaHref(){
-  var s = new URLSearchParams(location.search).get("s") || "organic";
-  s = s.replace(//g, "").slice(0,40);
-  if(!s) s = "organic";
-  return "/go?s=" + encodeURIComponent(s) + "&v=" + currentVariant;
+  return "en";
 }
 
 function applyLang(lang){
   var t = I18N[lang] || I18N.en;
   var v = VARIANTS[lang] || VARIANTS.en;
-  var pair = v.pairs[currentVariant] || v.pairs[0];
-
+  
   document.getElementById("htmlRoot").lang = t.htmlLang;
   document.getElementById("docTitle").textContent = t.title;
-  document.getElementById("h1Text").textContent = pair.h1;
-  document.getElementById("subText").textContent = pair.sub;
+  
+  // Apply rotated headline and subtitle
+  document.getElementById("h1Text").textContent = v.h1[currentVariant];
+  document.getElementById("subText").textContent = v.sub[currentVariant];
+  
   document.getElementById("ctaBtn").textContent = t.cta;
-  document.getElementById("ctaBtn").href = buildCtaHref();
   document.getElementById("microText").innerHTML =
-    "<span>"+t.micro[0]+"</span>·<span>"+t.micro[1]+"</span>·<span>"+t.micro[2]+"</span>";
+    "<span>"+t.micro[0]+"</span>&middot;<span>"+t.micro[1]+"</span>&middot;<span>"+t.micro[2]+"</span>";
   document.getElementById("cookieMsg").textContent = t.cookieMsg;
   document.getElementById("cookieOk").textContent = t.cookieOk;
   document.getElementById("footerCopy").textContent = t.footerCopy;
@@ -196,6 +365,12 @@ function applyLang(lang){
   document.getElementById("footerCookies").textContent = t.footerCookies;
   document.getElementById("footerImpressum").textContent = t.footerImpressum;
   document.getElementById("langSelect").value = lang;
+
+  // Pre-form CTA href with source and variant for tracking
+  var s = new URLSearchParams(location.search).get("s") || "organic";
+  s = s.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 40);
+  var v = currentVariant;
+  document.getElementById("ctaBtn").href = "/go?s=" + encodeURIComponent(s) + "&v=" + v;
 
   try{ localStorage.setItem("vm_lang", lang); }catch(e){}
 }
